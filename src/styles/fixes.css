@@ -1,0 +1,1370 @@
+/* ================================================================
+   fixes.css — 90DC Complete UI/UX Fix Pack
+   Load LAST, after main.css, community.css, components.css
+   Version: 1.0 — covers all Critical + Major + Minor audit issues
+   ================================================================ */
+
+/* ── 1. DESIGN TOKENS — fill gaps in existing :root ─────────── */
+:root {
+  --nav-height:  56px;
+  --bnav-height: 60px;
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left:   env(safe-area-inset-left, 0px);
+  --safe-right:  env(safe-area-inset-right, 0px);
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   14px;
+  --radius-xl:   20px;
+}
+
+/* ================================================================
+   CRITICAL FIX C1 — Bottom nav content padding
+   Content must never be hidden behind the fixed #bnav.
+   ================================================================ */
+.app-main {
+  padding-bottom: calc(var(--bnav-height) + var(--safe-bottom) + 24px) !important;
+}
+
+/* Bottom nav: correct height + safe area */
+#bnav {
+  padding-bottom: max(10px, var(--safe-bottom)) !important;
+  padding-top: 6px !important;
+}
+
+/* Community section has its own height calc — fix it too */
+#section-community {
+  height: calc(100dvh - var(--nav-height) - var(--bnav-height)) !important;
+  max-height: calc(100dvh - var(--nav-height) - var(--bnav-height)) !important;
+}
+@media (min-width: 900px) {
+  #section-community {
+    height: calc(100vh - var(--nav-height)) !important;
+    max-height: calc(100vh - var(--nav-height)) !important;
+  }
+}
+
+/* Toast: float above bottom nav */
+#toast {
+  bottom: calc(var(--bnav-height) + var(--safe-bottom) + 8px) !important;
+}
+#toast.show {
+  bottom: calc(var(--bnav-height) + var(--safe-bottom) + 16px) !important;
+}
+
+/* PWA install button: above bottom nav */
+#pwa-install-btn {
+  bottom: calc(var(--bnav-height) + var(--safe-bottom) + 8px) !important;
+}
+
+/* ================================================================
+   CRITICAL FIX C2 — Top nav notch/Dynamic Island safe area
+   ================================================================ */
+#main-nav {
+  padding-top: var(--safe-top) !important;
+}
+.lnav {
+  padding-top: var(--safe-top) !important;
+}
+
+/* ================================================================
+   CRITICAL FIX C3 — Chat input: flex + min-width:0
+   On 360px the textarea was getting crushed by icon buttons.
+   flex:1 + min-width:0 gives it all available space.
+   ================================================================ */
+.wc-input-row,
+.chat-input-row {
+  display: flex !important;
+  align-items: flex-end !important;
+  gap: 8px !important;
+  width: 100% !important;
+}
+
+/* The textarea MUST have min-width:0 to shrink inside flex */
+.wc-input-row textarea,
+.chat-input-row textarea,
+.chat-input {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  font-size: 1rem !important;     /* 16px — prevents iOS zoom */
+  min-height: 46px !important;
+  max-height: 120px !important;
+  padding: 11px 14px !important;
+  border-radius: 22px !important;
+  resize: none !important;
+  overflow-y: auto !important;
+  line-height: 1.4 !important;
+  box-sizing: border-box !important;
+}
+
+/* Icon action buttons: fixed size, never expand */
+.wc-tool-btn {
+  flex-shrink: 0 !important;
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
+}
+
+/* Send buttons: fixed circle */
+.wc-send-btn,
+.send-btn {
+  flex-shrink: 0 !important;
+  width: 46px !important;
+  min-width: 46px !important;
+  height: 46px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  font-size: 20px !important;
+}
+
+/* ================================================================
+   CRITICAL FIX C4 — All inputs: 16px font (prevent iOS zoom)
+   Any input font-size < 16px causes iOS to auto-zoom on tap.
+   ================================================================ */
+input,
+textarea,
+select,
+.form-input {
+  font-size: 1rem !important;    /* 16px minimum — non-negotiable */
+}
+
+.form-input {
+  padding: 12px 14px !important;
+  min-height: 48px !important;
+  line-height: 1.5 !important;
+  border-radius: var(--radius-md) !important;
+}
+
+textarea.form-input,
+.form-textarea {
+  min-height: 96px !important;
+  resize: vertical !important;
+}
+
+/* Remove iOS native styling on selects */
+select.form-input,
+.form-select {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  padding-right: 40px !important;
+  background-position: right 14px center !important;
+  cursor: pointer !important;
+}
+
+/* Remove number input spinners on mobile */
+input[type="number"] {
+  -moz-appearance: textfield !important;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+
+/* Placeholder contrast */
+::placeholder {
+  color: var(--gray2) !important;
+  opacity: 1 !important;
+}
+
+/* Focus ring: clear, branded */
+.form-input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  border-color: var(--orange) !important;
+  box-shadow: 0 0 0 3px rgba(217, 64, 16, 0.15) !important;
+}
+
+/* ================================================================
+   CRITICAL FIX C5 — Keyboard/input scroll (JS handles focus,
+   this CSS ensures no ancestor overflow:hidden blocks scroll)
+   ================================================================ */
+.app-main,
+.section.active,
+#page-app {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;     /* Must be auto, NOT hidden */
+}
+
+/* ================================================================
+   MAJOR FIX M1 — Slider thumb: 28px (finger-friendly)
+   Default thumb is ~16px — too small for reliable touch.
+   ================================================================ */
+input[type="range"] {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 100% !important;
+  height: 6px !important;
+  border-radius: 3px !important;
+  background: var(--bg4) !important;
+  cursor: pointer !important;
+  margin: 10px 0 !important;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  background: var(--orange) !important;
+  cursor: pointer !important;
+  margin-top: -11px !important;
+  border: 2px solid var(--bg) !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5) !important;
+  touch-action: none !important;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  background: var(--orange) !important;
+  border: 2px solid var(--bg) !important;
+  cursor: pointer !important;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px !important;
+  border-radius: 3px !important;
+}
+
+/* ================================================================
+   MAJOR FIX M2 — Water glass tap targets: 44px minimum
+   ================================================================ */
+.water-glass {
+  min-width: 44px !important;
+  min-height: 44px !important;
+  width: 100% !important;
+  aspect-ratio: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  background: var(--bg2) !important;
+  border: 1.5px solid var(--border) !important;
+  transition: all 0.15s !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation !important;
+}
+.water-glass:hover,
+.water-glass:active {
+  border-color: rgba(46, 123, 212, 0.5) !important;
+  background: rgba(46, 123, 212, 0.08) !important;
+}
+.water-glass.filled {
+  background: rgba(46, 123, 212, 0.25) !important;
+  border-color: rgba(46, 123, 212, 0.6) !important;
+}
+
+/* ================================================================
+   MAJOR FIX M3 — All buttons: minimum 44px tap targets
+   ================================================================ */
+.btn,
+button.btn,
+a.btn {
+  min-height: 44px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation !important;
+}
+
+.btn-primary,
+.btn-lg {
+  min-height: 52px !important;
+}
+
+.bnav-btn {
+  min-height: 54px !important;
+  min-width: 44px !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation !important;
+}
+
+.s-item {
+  min-height: 44px !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.tab-btn,
+.wc-tab-btn {
+  min-height: 40px !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.room-item,
+.wc-room-pill {
+  min-height: 40px !important;
+  touch-action: manipulation !important;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  min-width: 20px !important;
+  min-height: 20px !important;
+  accent-color: var(--orange) !important;
+  cursor: pointer !important;
+}
+.form-check {
+  min-height: 48px !important;
+  align-items: center !important;
+}
+
+/* ================================================================
+   MAJOR FIX M4 — Admin table: responsive card layout on mobile
+   The 6-col <table> is unreadable on 390px screens.
+   ================================================================ */
+@media (max-width: 768px) {
+  .utbl,
+  #adm-user-tbody {
+    display: block !important;
+    width: 100% !important;
+  }
+  .utbl thead {
+    display: none !important;
+  }
+  .utbl tbody,
+  #adm-user-tbody {
+    display: block !important;
+  }
+  .utbl tr {
+    display: block !important;
+    background: var(--bg3) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    margin-bottom: 10px !important;
+  }
+  .utbl td {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 6px 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+    font-size: 13px !important;
+    min-height: 36px !important;
+  }
+  .utbl td:last-child {
+    border-bottom: none !important;
+    padding-top: 10px !important;
+  }
+  .utbl td::before {
+    content: attr(data-label) !important;
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    color: var(--gray2) !important;
+    flex-shrink: 0 !important;
+    margin-right: 12px !important;
+    min-width: 80px !important;
+  }
+}
+
+/* ================================================================
+   MAJOR FIX M5 — 90-day progress grid: minimum 14px cells
+   At 360px, 10 cols × 3px gap = cells were ~7px — invisible.
+   ================================================================ */
+.day-grid {
+  display: grid !important;
+  grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
+  gap: 3px !important;
+}
+.day-cell {
+  aspect-ratio: 1 !important;
+  min-height: 14px !important;
+  border-radius: 3px !important;
+}
+
+/* Dashboard mini dot-map rows — ensure no overflow */
+#td-map-row1,
+#td-map-row2,
+#td-map-row3 {
+  display: grid !important;
+  grid-template-columns: repeat(30, 1fr) !important;
+  gap: 2px !important;
+  margin-bottom: 2px !important;
+}
+
+/* ================================================================
+   MAJOR FIX M6 — Rank badge: overflow protection
+   "LEGEND" is wider than "RECRUIT". Without max-width it breaks
+   the nav header on small screens.
+   ================================================================ */
+#nav-rank-pill {
+  max-width: 130px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+#nav-rank-name {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 80px !important;
+  display: inline-block !important;
+}
+@media (max-width: 380px) {
+  #nav-rank-pill {
+    max-width: 70px !important;
+    font-size: 7px !important;
+    padding: 2px 6px !important;
+  }
+}
+
+/* ================================================================
+   MAJOR FIX M7 — Warrior Center tabs: scrollable on small screens
+   7 rooms in a row on 360px = ~50px per tab — clips or wraps.
+   ================================================================ */
+.wc-rooms {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-snap-type: x mandatory !important;
+  flex-wrap: nowrap !important;
+  scrollbar-width: none !important;
+  padding-bottom: 2px !important;
+}
+.wc-rooms::-webkit-scrollbar { display: none !important; }
+
+.wc-room-pill {
+  scroll-snap-align: start !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+.wc-tabs {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: none !important;
+}
+.wc-tabs::-webkit-scrollbar { display: none !important; }
+.wc-tab-btn {
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* ================================================================
+   MAJOR FIX M8 — Chat reply/image/emoji state panels:
+   Display above the input row, not inside it.
+   Prevents the input textarea from getting squashed.
+   ================================================================ */
+.wc-input-area {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+}
+.wc-reply-preview  { order: 1 !important; }
+.wc-img-preview    { order: 2 !important; }
+.wc-recording-bar  { order: 3 !important; }
+.wc-emoji-picker   { order: 4 !important; }
+.wc-heal-warn      { order: 5 !important; }
+.wc-meta-row       { order: 6 !important; }
+.wc-input-row      { order: 7 !important; }
+
+/* ================================================================
+   MAJOR FIX M9 — Finance summary: 1 col on 360-600px
+   3 equal cards on 360px = 120px each — the Bebas Neue numbers
+   overflow at that width.
+   ================================================================ */
+@media (max-width: 600px) {
+  .fin-summary {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  .fin-num {
+    font-size: clamp(28px, 9vw, 36px) !important;
+  }
+}
+@media (min-width: 601px) and (max-width: 900px) {
+  .fin-summary {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ================================================================
+   MAJOR FIX M10 — Exercise paths: 3 cols on mobile (was 5)
+   5 equal columns on 360px = 72px each — labels clip.
+   ================================================================ */
+@media (max-width: 600px) {
+  .exercise-paths {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+  }
+  .ex-path {
+    padding: 12px 6px !important;
+  }
+  .ex-path-label {
+    font-size: 9px !important;
+  }
+}
+
+/* ================================================================
+   TYPOGRAPHY FIXES — Readability improvements app-wide
+   ================================================================ */
+
+/* Body text minimum: 14px */
+.card p,
+.section p,
+.resource-desc,
+.for-card-text,
+.origin-text p,
+.pillar-desc,
+.rule-desc,
+.faq-a,
+.alert-desc,
+.notif-body,
+.ob-desc {
+  font-size: 0.875rem !important;
+  line-height: 1.7 !important;
+}
+
+/* Chat message text: 16px (matches WhatsApp/Telegram standard) */
+.msg-text,
+.wc-msg-text {
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  color: var(--white) !important;
+  -webkit-user-select: none;
+  user-select: none;
+  word-break: break-word !important;
+}
+
+/* Timestamps */
+.msg-time,
+.wc-msg-time {
+  font-size: 0.6875rem !important;
+  white-space: nowrap !important;
+}
+
+/* Form labels */
+.form-label {
+  font-size: 0.75rem !important;
+  letter-spacing: 0.06em !important;
+  font-weight: 600 !important;
+  margin-bottom: 6px !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+}
+
+/* KPI numbers: responsive, never overflow */
+.kpi-num {
+  font-size: clamp(22px, 7vw, 44px) !important;
+  line-height: 1 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* ================================================================
+   SPACING FIXES — Vertical rhythm and card padding
+   ================================================================ */
+.form-group {
+  margin-bottom: 20px !important;
+}
+.form-group:last-child {
+  margin-bottom: 0 !important;
+}
+
+.card {
+  border-radius: 12px !important;
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 16px 14px !important;
+    margin-bottom: 12px !important;
+    border-radius: 10px !important;
+  }
+  .kpi-card {
+    padding: 14px 10px !important;
+  }
+}
+
+/* ================================================================
+   COMPONENT CONSISTENCY FIXES
+   ================================================================ */
+
+/* Badges grid: 3 cols on mobile */
+@media (max-width: 600px) {
+  .badges-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+  }
+  .badge-icon {
+    font-size: 28px !important;
+  }
+  .badge-name {
+    font-size: 9px !important;
+  }
+}
+
+/* Sleep summary: 2 cols on mobile */
+@media (max-width: 600px) {
+  .sleep-summary {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Admin KPI grid: 2 cols on mobile */
+@media (max-width: 600px) {
+  .admin-kpi-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+  .admin-kpi-num {
+    font-size: clamp(28px, 8vw, 44px) !important;
+  }
+}
+
+/* ================================================================
+   NOTIFICATION PANEL — Safe position on small screens
+   ================================================================ */
+.notif-panel {
+  top: calc(var(--nav-height) + var(--safe-top)) !important;
+  max-width: min(320px, 96vw) !important;
+  right: 4px !important;
+  border-radius: 8px !important;
+}
+
+/* ================================================================
+   MODAL — Correct bottom-sheet + safe area on mobile
+   ================================================================ */
+@media (max-width: 600px) {
+  .overlay {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+  .modal {
+    border-radius: 20px 20px 0 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 20px 16px calc(24px + var(--safe-bottom)) !important;
+    max-height: 92vh !important;
+    overflow-y: auto !important;
+    margin: 0 !important;
+  }
+  .modal::before {
+    content: '' !important;
+    display: block !important;
+    width: 36px !important;
+    height: 4px !important;
+    background: var(--border2) !important;
+    border-radius: 2px !important;
+    margin: 0 auto 18px !important;
+  }
+}
+
+/* ================================================================
+   GLOBAL FLEX OVERFLOW PREVENTION
+   The #1 cause of text clipping in flex layouts.
+   Every flex child needs min-width:0 to be able to shrink.
+   ================================================================ */
+.wc-msg-body,
+.msg-body,
+.s-item,
+.acct-item > *,
+.daily3-item > *,
+.alert-item > *,
+.notif-item > *,
+.resource-item > *,
+.gs-item > *,
+.nav-right > *,
+.chat-msg > *,
+.wc-msg > * {
+  min-width: 0 !important;
+}
+
+/* Overflow ellipsis on name/text elements that may be long */
+.wc-msg-name,
+.msg-name,
+.d3-name,
+.alert-title,
+.debt-name {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  min-width: 0 !important;
+}
+
+/* ================================================================
+   OATH BOX — Deserves visual treatment (it's the emotional core)
+   ================================================================ */
+.oath-box {
+  position: relative !important;
+}
+.oath-box::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 3px !important;
+  background: linear-gradient(180deg, var(--orange), var(--gold2)) !important;
+  border-radius: 0 !important;
+}
+.oath-line {
+  font-size: clamp(15px, 3vw, 22px) !important;
+  line-height: 1.55 !important;
+  color: var(--white) !important;
+}
+
+/* ================================================================
+   EMPTY STATES — Styled placeholder for zero-data screens
+   ================================================================ */
+.empty-state {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 48px 24px !important;
+  text-align: center !important;
+  color: var(--gray2) !important;
+}
+.empty-state-icon {
+  font-size: 44px !important;
+  margin-bottom: 14px !important;
+  opacity: 0.5 !important;
+  filter: grayscale(1) !important;
+}
+.empty-state-title {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: var(--gray) !important;
+  margin-bottom: 6px !important;
+}
+.empty-state-desc {
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
+  max-width: 240px !important;
+}
+
+/* ================================================================
+   CLEAN/SLIP TOGGLE BUTTONS — Better than tiny radio buttons
+   Used for alcohol/social media/diet toggles in check-ins.
+   Existing acToggle() JS will still work — just better styled.
+   ================================================================ */
+.ac-toggle-group,
+.ec-toggle-group {
+  display: flex !important;
+  gap: 8px !important;
+  margin-top: 4px !important;
+}
+/* Style the existing toggle buttons generated by acToggle() */
+button[id^="ac-"],
+button[id^="ec-"] {
+  flex: 1 !important;
+  min-height: 48px !important;
+  border-radius: 10px !important;
+  border: 1.5px solid var(--border) !important;
+  background: var(--bg2) !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  cursor: pointer !important;
+  transition: all 0.15s !important;
+  color: var(--gray) !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation !important;
+}
+
+/* ================================================================
+   ACCESSIBILITY — Focus visible for keyboard navigation
+   ================================================================ */
+:focus-visible {
+  outline: 2px solid var(--orange) !important;
+  outline-offset: 2px !important;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ================================================================
+   SCROLLABLE TABS — Applies everywhere tabs may overflow
+   ================================================================ */
+.tabs-bar {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  flex-wrap: nowrap !important;
+  scroll-snap-type: x mandatory !important;
+  scrollbar-width: none !important;
+  gap: 4px !important;
+}
+.tabs-bar::-webkit-scrollbar { display: none !important; }
+.tab-btn {
+  scroll-snap-align: start !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* ================================================================
+   PROFILE PAGE — Avatar and completion polish
+   ================================================================ */
+#prof-av-wrap {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  border: 2px solid var(--orange) !important;
+  flex-shrink: 0 !important;
+}
+
+/* Sign out button: visually distinct (destructive action) */
+#sign-out-btn,
+button[onclick*="signOut"],
+button[onclick*="sign-out"] {
+  color: var(--red2) !important;
+  border-color: rgba(192, 57, 43, 0.3) !important;
+}
+#sign-out-btn:hover,
+button[onclick*="signOut"]:hover {
+  background: rgba(192, 57, 43, 0.1) !important;
+}
+
+/* ================================================================
+   LANDSCAPE MODE — Ensure chat input stays accessible
+   ================================================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+  .wc-messages,
+  .chat-msgs {
+    max-height: calc(100vh - 200px) !important;
+  }
+  #section-community {
+    height: calc(100vh - var(--nav-height)) !important;
+  }
+  .app-main {
+    padding-top: 8px !important;
+  }
+}
+
+/* ================================================================
+   LARGE SCREENS — Center content, cap max-width
+   ================================================================ */
+@media (min-width: 1200px) {
+  .app-main {
+    max-width: 900px !important;
+  }
+  .lsec {
+    max-width: 1100px !important;
+  }
+}
+
+/* ================================================================
+   DASHBOARD — CTA button: always prominent
+   ================================================================ */
+#nci-btn {
+  width: 100% !important;
+  min-height: 56px !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.08em !important;
+  border-radius: 10px !important;
+}
+
+/* Getting-started checklist: hide after Day 7 handled by JS.
+   This ensures the card never takes up space once all done. */
+#getting-started-card.hidden {
+  display: none !important;
+}
+
+/* Profile remind bar: more compact */
+#profile-remind-bar {
+  border-radius: 10px !important;
+}
+
+/* ================================================================
+   WORKOUT — Session log inputs: proper sizing
+   ================================================================ */
+.session-card input[type="number"] {
+  font-size: 1rem !important;
+  min-height: 44px !important;
+  padding: 8px 12px !important;
+}
+
+.session-card .btn {
+  min-height: 44px !important;
+  padding: 8px 16px !important;
+  font-size: 0.8125rem !important;
+}
+
+/* Timer buttons: big enough to tap during workout */
+#wk-start-btn,
+#wk-stop-btn,
+#wk-reset-btn {
+  min-height: 48px !important;
+  min-width: 80px !important;
+  font-size: 0.9375rem !important;
+}
+
+/* ================================================================
+   PROGRESS PAGE — Transformation grid mobile
+   ================================================================ */
+@media (max-width: 600px) {
+  .transform-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+}
+
+/* ================================================================
+   RESOURCES — Cards readable on mobile
+   ================================================================ */
+@media (max-width: 600px) {
+  .resource-item {
+    flex-direction: row !important;
+    gap: 12px !important;
+  }
+  .resource-title {
+    font-size: 0.875rem !important;
+  }
+  .resource-desc {
+    font-size: 0.8125rem !important;
+  }
+}
+
+/* ================================================================
+   OFFLINE BANNER — Top of screen, above everything
+   ================================================================ */
+.offline-banner {
+  padding-top: max(8px, var(--safe-top)) !important;
+}
+
+/* ================================================================
+   FINAL: prevent any horizontal overflow globally
+   ================================================================ */
+body, #page-app, .app-layout {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+/* ================================================================
+   AUTH PAGE — 2-col signup grids collapse to 1-col on mobile
+   ================================================================ */
+#page-auth {
+  min-height: 100vh;
+  overflow-y: auto;
+}
+.auth-card {
+  width: 100%;
+}
+@media (max-width: 600px) {
+  .auth-grid-2col,
+  #auth-signup div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  .auth-card {
+    padding: 20px 16px !important;
+  }
+  /* TFA digits: bigger on mobile */
+  .tfa-digit {
+    width: 40px !important;
+    height: 48px !important;
+    font-size: 20px !important;
+  }
+}
+
+/* ================================================================
+   DASHBOARD — Finance mini-grid: 2×2 on all screens
+   ================================================================ */
+#fin-budget,
+#fin-spent,
+#fin-today-saved,
+#fin-total-saved {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ================================================================
+   MOBILE MORE DRAWER — grid items bigger touch targets
+   ================================================================ */
+#mobile-more .bnav-btn {
+  min-height: 64px !important;
+  padding: 10px 4px !important;
+  border-radius: 8px !important;
+  background: var(--bg4) !important;
+  border: 1px solid var(--border) !important;
+}
+#mobile-more .bnav-btn:active {
+  background: rgba(217,64,16,0.12) !important;
+  border-color: rgba(217,64,16,0.3) !important;
+}
+
+/* ================================================================
+   CHECK-IN SUBMIT — sticky button gradient backdrop
+   ================================================================ */
+#section-morning > div[style*="sticky"],
+#section-afternoon > div[style*="sticky"],
+#section-evening > div[style*="sticky"] {
+  z-index: 10;
+}
+
+/* ================================================================
+   TASK TIME INPUTS — don't shrink below 110px
+   ================================================================ */
+#t1-time, #t2-time, #t3-time {
+  flex-shrink: 0 !important;
+  min-width: 110px !important;
+  width: 110px !important;
+}
+#t1-name, #t2-name, #t3-name {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+/* ================================================================
+   PROFILE — avatar wrap sizing
+   ================================================================ */
+#prof-av-wrap {
+  width: 80px !important;
+  height: 80px !important;
+  min-width: 80px !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+/* ================================================================
+   ONBOARDING — full-width on mobile
+   ================================================================ */
+@media (max-width: 600px) {
+  .ob-wrap {
+    padding: 12px 12px 40px !important;
+  }
+  .ob-card {
+    padding: 18px 14px !important;
+  }
+  .ob-title {
+    font-size: clamp(24px, 7vw, 36px) !important;
+  }
+  .m2-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ================================================================
+   PASSWORD VISIBILITY BUTTON — not affected by global button min-height
+   ================================================================ */
+button[onclick*="li-pass"],
+button[onclick*="su-pass"] {
+  min-height: unset !important;
+  min-width: unset !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+}
+
+/* ================================================================
+   OFFLINE BANNER — safe area aware
+   ================================================================ */
+.offline-banner {
+  padding-top: max(8px, env(safe-area-inset-top, 8px)) !important;
+  padding-bottom: 8px !important;
+}
+
+/* ================================================================
+   CRISIS LINKS + SUPPORT CONTACTS — proper tap targets
+   ================================================================ */
+.crisis-link {
+  min-height: 36px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 6px 12px !important;
+  font-size: 12px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  background: rgba(46, 123, 212, 0.08) !important;
+  border: 1px solid rgba(46, 123, 212, 0.4) !important;
+  border-radius: 100px !important;
+  color: var(--blue2) !important;
+  cursor: pointer !important;
+  font-weight: 600 !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation !important;
+}
+.crisis-link:hover,
+.crisis-link:active {
+  background: rgba(46, 123, 212, 0.18) !important;
+}
+
+/* ================================================================
+   CERT PAGE — print styles
+   ================================================================ */
+@media print {
+  #main-nav, #bnav, #mobile-more, .lnav, #pwa-install-btn { display: none !important; }
+  #page-completion { display: block !important; }
+  .cert-box { border: 2px solid #D94010; page-break-inside: avoid; }
+  body { background: white !important; color: black !important; }
+}
+
+/* ================================================================
+   SAVED TODAY preview — more readable
+   ================================================================ */
+#ec-saved-preview strong {
+  font-size: 1.1em !important;
+}
+
+/* ================================================================
+   MINDSET — support contact buttons
+   ================================================================ */
+#mindset-support-row .btn {
+  min-height: 48px !important;
+  font-size: 12px !important;
+}
+
+/* ================================================================
+   GLOBAL — prevent any button from being too narrow to tap
+   ================================================================ */
+button:not([style*="min-height:auto"]):not(.modal-close):not(.wc-rec-cancel):not(.wc-reply-close) {
+  min-height: 36px;
+}
+
+/* ================================================================
+   LANDING — hero 2-col grid → 1 col on mobile
+   ================================================================ */
+@media (max-width: 768px) {
+  .hero > div[style*="grid-template-columns:1fr 1fr"],
+  section.hero > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    gap: 32px !important;
+  }
+  .hero {
+    padding-top: 80px !important;
+    padding-bottom: 40px !important;
+  }
+  /* Hide the right col social proof on very small screens - landing page only */
+}
+
+/* ================================================================
+   SECTION HEADERS — don't use Bebas Neue ALL CAPS for small text
+   ================================================================ */
+.eyebrow {
+  font-size: 9px !important;
+  letter-spacing: 4px !important;
+  line-height: 1.4 !important;
+}
+
+/* ================================================================
+   PRODUCTION LAUNCH POLISH
+   Covers: check-in ritual feel, sticky CTA consistency,
+   section spacing, card hierarchy, discipline board,
+   bottom nav safe area, light/dark theme consistency
+   ================================================================ */
+
+/* Check-in pages: shared bottom padding */
+#section-morning,
+#section-afternoon,
+#section-evening {
+  padding-bottom: calc(var(--bnav-height) + env(safe-area-inset-bottom, 0px) + 24px) !important;
+}
+
+/* Eyebrow + sec-title: tighter at top */
+#section-morning > .eyebrow,
+#section-afternoon > .eyebrow,
+#section-evening > .eyebrow { margin-bottom: 4px !important; }
+#section-morning > .sec-title,
+#section-afternoon > .sec-title,
+#section-evening > .sec-title { margin-bottom: 16px !important; line-height: 1.1 !important; }
+
+/* Tab bar: bleed to card edges, scrollable */
+.card.card-accent .tabs-bar,
+.card-accent .tabs-bar {
+  margin: -16px -16px 16px !important;
+  padding: 0 16px !important;
+  border-bottom: 1px solid var(--border) !important;
+  background: var(--bg2) !important;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+  overflow-x: auto !important;
+  white-space: nowrap !important;
+  scrollbar-width: none !important;
+  display: flex !important;
+  gap: 0 !important;
+}
+.card.card-accent .tabs-bar::-webkit-scrollbar { display: none !important; }
+.card.card-accent .tab-btn {
+  padding: 13px 16px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  border-bottom: 2px solid transparent !important;
+  min-height: 46px !important;
+}
+.card.card-accent .tab-btn.active {
+  color: var(--orange) !important;
+  border-bottom-color: var(--orange) !important;
+}
+
+/* Tab panels: consistent vertical rhythm */
+.tab-panel { padding: 4px 0 8px !important; }
+.tab-panel .form-group { margin-bottom: 16px !important; }
+.tab-panel .form-group:last-child { margin-bottom: 0 !important; }
+
+/* Form labels: clear hierarchy */
+.form-label {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: var(--text-secondary) !important;
+  margin-bottom: 7px !important;
+  display: block !important;
+  line-height: 1.4 !important;
+}
+
+/* Yes/No toggle buttons */
+#section-morning .btn-outline,
+#section-afternoon .btn-outline,
+#section-evening .btn-outline {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  min-height: 52px !important;
+  border-radius: 8px !important;
+  transition: all 0.15s !important;
+}
+
+/* Sticky CTA: consistent across all 3 check-ins */
+#section-morning > [style*="position:sticky"],
+#section-afternoon > [style*="position:sticky"],
+#section-evening > [style*="position:sticky"] {
+  position: sticky !important;
+  bottom: 0 !important;
+  z-index: 20 !important;
+  padding: 12px 0 calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+  background: linear-gradient(transparent, var(--bg2) 35%) !important;
+  margin-top: 8px !important;
+}
+#section-morning > [style*="position:sticky"] .btn,
+#section-afternoon > [style*="position:sticky"] .btn,
+#section-evening > [style*="position:sticky"] .btn {
+  min-height: 56px !important;
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: 18px !important;
+  letter-spacing: 2px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(217,64,16,0.3) !important;
+}
+
+/* Complete banners */
+#morning-complete-banner,
+#afternoon-complete-banner,
+#evening-complete-banner {
+  border-radius: 10px !important;
+  padding: 16px !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+  margin-bottom: 16px !important;
+}
+
+/* Discipline board: single col mobile, 2-col desktop */
+#discipline-board {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 6px !important;
+}
+#discipline-board .discipline-rule-row { margin-bottom: 0 !important; }
+@media (min-width: 480px) {
+  #discipline-board { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* Card hierarchy */
+.card-accent { border-color: rgba(217,64,16,0.2) !important; }
+
+/* Bottom nav safe area */
+#bnav {
+  padding-bottom: max(12px, env(safe-area-inset-bottom, 12px)) !important;
+  padding-top: 8px !important;
+}
+
+/* Toast above bottom nav */
+#toast {
+  bottom: calc(var(--bnav-height, 64px) + env(safe-area-inset-bottom, 0px) + 12px) !important;
+  z-index: 9999 !important;
+}
+
+/* Consistent section top padding */
+.section { padding-top: 16px !important; }
+
+/* Wake time card */
+.card-gold {
+  border: 1.5px solid rgba(184,146,42,0.35) !important;
+  background: rgba(184,146,42,0.04) !important;
+}
+
+/* Desktop: check-in sections max-width */
+@media (min-width: 901px) {
+  #section-morning,
+  #section-afternoon,
+  #section-evening { max-width: 680px !important; }
+}
+
+/* Tab info banners: consistent padding */
+.tab-panel > [style*="border-radius:5px"] {
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  margin-bottom: 16px !important;
+}
+
+/* Evening reading quote: feels important */
+#ec-reading-quote {
+  font-size: 16px !important;
+  min-height: 80px !important;
+  font-style: italic !important;
+  line-height: 1.7 !important;
+  border-left: 3px solid var(--orange) !important;
+  border-radius: 0 8px 8px 0 !important;
+  padding-left: 16px !important;
+}
+
+/* Evening journal: spacious */
+#ec-journal {
+  min-height: 100px !important;
+  line-height: 1.7 !important;
+}
+
+/* Morning commitment: stands out */
+#mc-commitment {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  border-left: 3px solid var(--orange) !important;
+  border-radius: 0 8px 8px 0 !important;
+  padding-left: 16px !important;
+}
+
+/* Savings preview */
+#ec-saved-preview {
+  border-radius: 8px !important;
+  font-size: 15px !important;
+}
+
+/* Light mode check-in backgrounds */
+[data-theme="light"] #section-morning,
+[data-theme="light"] #section-afternoon,
+[data-theme="light"] #section-evening { background: var(--bg) !important; }
+[data-theme="light"] .card-accent { background: var(--surface) !important; }
+
+/* ── Onboarding mobile scroll fix ──────────────────────────── */
+#page-onboarding {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  min-height: 100vh;
+  align-items: flex-start !important;
+}
+.ob-wrap {
+  overflow-y: visible !important;
+  padding-bottom: 40px !important;
+}
+.ob-card {
+  overflow-y: visible !important;
+}

@@ -1,0 +1,14 @@
+[
+  { "id": "first_checkin",   "name": "First Blood",       "emoji": "🩸", "desc": "Completed first check-in",       "condition": "day >= 1 && checkedIn" },
+  { "id": "streak_7",        "name": "7-Day Warrior",     "emoji": "🔥", "desc": "7 days without breaking",        "condition": "streak >= 7" },
+  { "id": "streak_14",       "name": "Iron 14",           "emoji": "⚔️", "desc": "14-day unbroken streak",         "condition": "streak >= 14" },
+  { "id": "streak_30",       "name": "Month of Steel",    "emoji": "🛡️", "desc": "30-day unbroken streak",         "condition": "streak >= 30" },
+  { "id": "streak_60",       "name": "The Disciplined",   "emoji": "👑", "desc": "60-day unbroken streak",         "condition": "streak >= 60" },
+  { "id": "streak_90",       "name": "90 Days Legend",    "emoji": "🦅", "desc": "Completed the full 90 days",     "condition": "streak >= 90" },
+  { "id": "savings_first",   "name": "Saver",             "emoji": "💰", "desc": "First savings logged",           "condition": "totalSaved > 0" },
+  { "id": "savings_500",     "name": "P500 Club",         "emoji": "🏦", "desc": "Saved P500 or more",             "condition": "totalSaved >= 500" },
+  { "id": "workouts_10",     "name": "10 Workouts",       "emoji": "💪", "desc": "Completed 10 workout sessions",  "condition": "totalWorkoutsCompleted >= 10" },
+  { "id": "workouts_50",     "name": "50 Reps of Life",   "emoji": "🏋️", "desc": "50 workout sessions",           "condition": "totalWorkoutsCompleted >= 50" },
+  { "id": "community_first", "name": "Tribe Member",      "emoji": "🤝", "desc": "First post in community",        "condition": "gsCompleted.community" },
+  { "id": "partner_set",     "name": "Accountability",    "emoji": "⚔️", "desc": "Added accountability partner",   "condition": "acctPartner != null" }
+]

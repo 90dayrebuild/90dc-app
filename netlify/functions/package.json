@@ -1,0 +1,9 @@
+{
+  "name": "90dc-netlify-functions",
+  "version": "1.0.0",
+  "description": "Netlify serverless functions for 90 Days Challenge",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.52.0",
+    "web-push": "^3.6.7"
+  }
+}

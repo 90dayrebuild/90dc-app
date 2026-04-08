@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join The 90 Days Challenge — The Discipline Movement</title>
+  <meta name="description" content="90 days of no excuses. Daily accountability, financial discipline, community support. Botswana's most powerful transformation challenge.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+
+  <!-- PayPal JS SDK — replace YOUR_CLIENT_ID with your actual PayPal client ID -->
+  <!-- For testing: use your SANDBOX client ID -->
+  <!-- For live:    use your LIVE client ID -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AT0NSWjxFIVE5KXIE6ywrDZbAobuswjeUI3iKZUDq-ay84xJRzz7xi0wgKdCPeId0l6BTiEE53nsWclX&currency=USD&intent=capture" defer></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange:  #d94010;
+      --orange2: #f05020;
+      --gold:    #b8922a;
+      --bg:      #0a0a0a;
+      --bg2:     #111;
+      --bg3:     #1a1a1a;
+      --border:  #2a2a2a;
+      --text:    #ffffff;
+      --muted:   #888;
+      --green:   #22a855;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── Hero ────────────────────────────── */
+    .hero {
+      background: linear-gradient(160deg, #0a0a0a 0%, #1a0a05 50%, #0a0a0a 100%);
+      padding: 60px 20px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(217,64,16,0.15) 0%, transparent 70%);
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .hero-title {
+      font-size: clamp(48px, 10vw, 96px);
+      font-weight: 900;
+      line-height: 0.9;
+      color: var(--text);
+      letter-spacing: -2px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .hero-title span { color: var(--orange); }
+    .hero-sub {
+      font-size: clamp(15px, 2.5vw, 20px);
+      color: var(--muted);
+      margin: 20px auto 0;
+      max-width: 520px;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    /* ── Stats bar ───────────────────────── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+    }
+    .stat {
+      padding: 20px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-size: clamp(22px, 4vw, 36px);
+      font-weight: 900;
+      color: var(--orange);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── Rules section ───────────────────── */
+    .section { padding: 60px 20px; max-width: 800px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(24px, 5vw, 40px);
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 32px;
+      line-height: 1.1;
+    }
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .rule-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .rule-num {
+      background: var(--orange);
+      color: #fff;
+      font-weight: 900;
+      font-size: 12px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .rule-text { font-size: 14px; color: #ccc; line-height: 1.4; }
+
+    /* ── What you get ────────────────────── */
+    .benefits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .benefit-icon { font-size: 24px; flex-shrink: 0; }
+    .benefit-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .benefit-desc  { font-size: 13px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+
+    /* ── Payment section ─────────────────── */
+    .payment-section {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 20px;
+    }
+    .payment-inner {
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .price-display {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .price-amount {
+      font-size: clamp(56px, 10vw, 80px);
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1;
+    }
+    .price-currency {
+      font-size: 20px;
+      color: var(--orange);
+      font-weight: 700;
+      vertical-align: super;
+    }
+    .price-period { font-size: 14px; color: var(--muted); margin-top: 4px; }
+    .price-note   { font-size: 13px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+
+    /* Form fields */
+    .form-group { margin-bottom: 16px; }
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%;
+      background: var(--bg3);
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .form-input:focus { border-color: var(--orange); }
+    .form-input::placeholder { color: #444; }
+
+    /* PayPal button container */
+    #paypal-button-container {
+      margin-top: 8px;
+    }
+    #paypal-button-container.hidden { display: none; }
+
+    .proceed-btn {
+      width: 100%;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      margin-bottom: 12px;
+    }
+    .proceed-btn:hover  { background: var(--orange2); }
+    .proceed-btn:active { transform: scale(0.98); }
+
+    .payment-note {
+      text-align: center;
+      font-size: 12px;
+      color: #444;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+    .payment-note a { color: var(--muted); }
+
+    /* Access date badge */
+    .access-badge {
+      background: var(--bg3);
+      border: 1.5px solid rgba(217,64,16,0.3);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .access-badge-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 4px;
+    }
+    .access-badge-date {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .access-badge-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── Processing state ────────────────── */
+    #payment-processing {
+      display: none;
+      text-align: center;
+      padding: 32px;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--orange);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Error state ─────────────────────── */
+    #payment-error {
+      display: none;
+      background: rgba(192,57,43,0.1);
+      border: 1px solid rgba(192,57,43,0.3);
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 14px;
+      color: #e74c3c;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* ── Success state ───────────────────── */
+    #payment-success {
+      display: none;
+      text-align: center;
+    }
+    .success-icon { font-size: 56px; margin-bottom: 16px; }
+    .success-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .success-sub { font-size: 15px; color: var(--muted); line-height: 1.7; }
+    .success-access {
+      background: var(--bg3);
+      border: 1.5px solid rgba(34,168,85,0.3);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .success-access-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+    .success-access-date {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    /* ── FAQ ─────────────────────────────── */
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .faq-q { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .faq-a { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Sticky mobile CTA ───────────────── */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 12px 20px;
+      z-index: 100;
+    }
+    @media (max-width: 600px) { .sticky-cta { display: block; } }
+    .sticky-cta-btn {
+      display: block;
+      width: 100%;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      .stats-bar { grid-template-columns: 1fr; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat:last-child { border-bottom: none; }
+      .rules-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-eyebrow">The Discipline Movement · Botswana</div>
+    <h1 class="hero-title">90<br><span>DAYS</span><br>CHALLENGE</h1>
+    <p class="hero-sub">
+      8 rules. 90 days. No excuses. The most serious transformation challenge in Botswana — for people who are done making promises they don't keep.
+    </p>
+  </section>
+
+  <!-- ── STATS ─────────────────────────────────────────────── -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num">90</div>
+      <div class="stat-label">Days</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">8</div>
+      <div class="stat-label">Daily Rules</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Goal</div>
+    </div>
+  </div>
+
+  <!-- ── RULES ─────────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-eyebrow">What You Commit To</div>
+    <h2 class="section-title">8 Rules.<br>Every Single Day.</h2>
+    <div class="rules-grid">
+      <div class="rule-card"><div class="rule-num">1</div><div class="rule-text">No alcohol</div></div>
+      <div class="rule-card"><div class="rule-num">2</div><div class="rule-text">No social media scrolling</div></div>
+      <div class="rule-card"><div class="rule-num">3</div><div class="rule-text">No drugs or substances</div></div>
+      <div class="rule-card"><div class="rule-num">4</div><div class="rule-text">Daily workout — 1,000 reps or 10km</div></div>
+      <div class="rule-card"><div class="rule-num">5</div><div class="rule-text">No overspending — hold your daily budget</div></div>
+      <div class="rule-card"><div class="rule-num">6</div><div class="rule-text">Daily reading — minimum 10 pages</div></div>
+      <div class="rule-card"><div class="rule-num">7</div><div class="rule-text">Daily journaling</div></div>
+      <div class="rule-card"><div class="rule-num">8</div><div class="rule-text">No toxic contact</div></div>
+    </div>
+  </div>
+
+  <!-- ── BENEFITS ──────────────────────────────────────────── -->
+  <div class="section" style="padding-top:0;">
+    <div class="section-eyebrow">What You Get</div>
+    <h2 class="section-title">Everything You Need<br>to Actually Finish.</h2>
+    <div class="benefits-list">
+      <div class="benefit-item">
+        <div class="benefit-icon">📱</div>
+        <div>
+          <div class="benefit-title">The 90DC App — Your Command Center</div>
+          <div class="benefit-desc">Daily check-ins, habit tracking, finance logging, reading tracker, and journal. Everything in one place, built for serious people.</div>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">⚔️</div>
+        <div>
+          <div class="benefit-title">Accountability Partner</div>
+          <div class="benefit-desc">Get matched with or choose a warrior from the community. They see your check-ins. You see theirs. Neither of you can hide.</div>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">💬</div>
+        <div>
+          <div class="benefit-title">Warrior Center Community</div>
+          <div class="benefit-desc">Private community of people doing exactly what you're doing. Progress room, healing room, opportunities room. Real people, real accountability.</div>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🎥</div>
+        <div>
+          <div class="benefit-title">Weekly Live Sessions with Osi</div>
+          <div class="benefit-desc">Every Saturday — live Q&A, accountability check, and a hard conversation about what's working and what isn't.</div>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🏆</div>
+        <div>
+          <div class="benefit-title">Rank System & Badges</div>
+          <div class="benefit-desc">Progress through 7 ranks from Recruit to Legend. Earn badges for consistency, financial discipline, and community. Real recognition for real work.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PAYMENT ────────────────────────────────────────────── -->
+  <div class="payment-section" id="payment">
+    <div class="payment-inner">
+
+      <div class="section-eyebrow" style="text-align:center;">Join The Movement</div>
+      <div class="price-display">
+        <div class="price-amount"><span class="price-currency">P</span>350</div>
+        <div class="price-period">once · full 90-day access</div>
+        <div class="price-note">One payment. No subscriptions. No hidden fees.</div>
+      </div>
+
+      <!-- Access date info -->
+      <div class="access-badge">
+        <div class="access-badge-label">Next Cohort Access Date</div>
+        <div class="access-badge-date" id="access-date-display">8th of next month</div>
+        <div class="access-badge-sub">Pay now. App access opens on this date. Everyone starts together.</div>
+      </div>
+
+      <!-- Step 1: Enter details -->
+      <div id="payment-form">
+        <div class="form-group">
+          <label class="form-label" for="payer-name">Full Name *</label>
+          <input type="text" id="payer-name" class="form-input" placeholder="Your full name" autocomplete="name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="payer-email">Email Address *</label>
+          <input type="email" id="payer-email" class="form-input" placeholder="your@email.com" autocomplete="email" required>
+          <div style="font-size:11px;color:#555;margin-top:4px;">Your access link will be sent here on the 8th.</div>
+        </div>
+
+        <button class="proceed-btn" id="proceed-btn" onclick="proceedToPayment()">
+          Proceed to Payment →
+        </button>
+      </div>
+
+      <!-- Step 2: PayPal buttons (shown after form validation) -->
+      <div id="paypal-section" class="hidden">
+        <div style="font-size:13px;color:var(--muted);text-align:center;margin-bottom:12px;">
+          Paying as <strong id="payer-name-display" style="color:#fff;"></strong> · <span id="payer-email-display" style="color:#888;"></span>
+          &nbsp;<button onclick="resetPayment()" style="background:none;border:none;color:var(--orange);cursor:pointer;font-size:12px;text-decoration:underline;">Change</button>
+        </div>
+        <div id="paypal-button-container"></div>
+      </div>
+
+      <!-- Processing -->
+      <div id="payment-processing">
+        <div class="spinner"></div>
+        <div style="color:var(--muted);font-size:14px;">Confirming your payment…</div>
+      </div>
+
+      <!-- Error -->
+      <div id="payment-error"></div>
+
+      <!-- Success -->
+      <div id="payment-success">
+        <div class="success-icon">✅</div>
+        <div class="success-title">You're In.</div>
+        <div class="success-sub">Payment confirmed. Your spot is locked. Check your inbox for a confirmation email.</div>
+        <div class="success-access">
+          <div class="success-access-label">Access Opens</div>
+          <div class="success-access-date" id="success-access-date">—</div>
+        </div>
+        <div class="success-sub" style="font-size:13px;color:#555;">
+          Keep an eye on <strong id="success-email" style="color:#888;"></strong> — your login link arrives on that date.
+        </div>
+      </div>
+
+      <div class="payment-note">
+        <div>🔒 Payments processed securely by PayPal</div>
+        <div>Questions? <a href="mailto:osi@90dayschallenge.co.bw">osi@90dayschallenge.co.bw</a></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── FAQ ───────────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-eyebrow">Questions</div>
+    <h2 class="section-title">Frequently Asked</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Why don't I get access immediately after paying?</div>
+        <div class="faq-a">Everyone in a cohort starts together on the 8th. This means your accountability partner starts on the same day, the community is in sync, and the live sessions align with your progress. It's not a delay — it's how the challenge is designed to work.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What happens on the 8th?</div>
+        <div class="faq-a">You'll receive an email with a link that logs you straight into the app. Your account is created, Day 1 begins, and you complete your first Morning Check-In. That's it.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What currency is the payment in?</div>
+        <div class="faq-a">The challenge is priced in Botswana Pula (P350). PayPal will convert to your card's currency at the current exchange rate.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if I miss a day?</div>
+        <div class="faq-a">Your streak resets. You get a warning. Three strikes and the challenge restarts from Day 1. The accountability is real — that's the point.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is there a refund policy?</div>
+        <div class="faq-a">No refunds after access is granted on the 8th. If you have a genuine emergency before access, contact us directly.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Who is this for?</div>
+        <div class="faq-a">People who are serious. People who are tired of starting and stopping. People who need a system, a community, and someone to answer to. If you're looking for something easy, this is not it.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STICKY CTA (mobile) ────────────────────────────────── -->
+  <div class="sticky-cta">
+    <a href="#payment" class="sticky-cta-btn">Join Now — P350 →</a>
+  </div>
+
+  <!-- ── SCRIPTS ────────────────────────────────────────────── -->
+  <script>
+    // ── Calculate and display next access date ──────────────
+    function getNextAccessDate() {
+      const now   = new Date();
+      const day   = now.getDate();
+      let year    = now.getFullYear();
+      let month   = now.getMonth();
+      if (day >= 8) {
+        month += 1;
+        if (month > 11) { month = 0; year += 1; }
+      }
+      const d = new Date(year, month, 8);
+      return {
+        display: d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }),
+        iso:     d.toISOString().split('T')[0],
+      };
+    }
+
+    const accessDateInfo = getNextAccessDate();
+    document.getElementById('access-date-display').textContent = accessDateInfo.display;
+
+    // ── Form validation & show PayPal buttons ───────────────
+    let payerName  = '';
+    let payerEmail = '';
+    let paypalRendered = false;
+
+    function proceedToPayment() {
+      payerName  = document.getElementById('payer-name')?.value.trim();
+      payerEmail = document.getElementById('payer-email')?.value.trim();
+
+      if (!payerName) {
+        alert('Please enter your full name.');
+        document.getElementById('payer-name').focus();
+        return;
+      }
+      if (!payerEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payerEmail)) {
+        alert('Please enter a valid email address.');
+        document.getElementById('payer-email').focus();
+        return;
+      }
+
+      document.getElementById('payer-name-display').textContent  = payerName;
+      document.getElementById('payer-email-display').textContent = payerEmail;
+      document.getElementById('payment-form').style.display      = 'none';
+      document.getElementById('paypal-section').classList.remove('hidden');
+
+      if (!paypalRendered) {
+        renderPayPalButton();
+        paypalRendered = true;
+      }
+    }
+
+    function resetPayment() {
+      document.getElementById('payment-form').style.display = '';
+      document.getElementById('paypal-section').classList.add('hidden');
+    }
+
+    // ── Render PayPal smart button ──────────────────────────
+    function renderPayPalButton() {
+      if (typeof paypal === 'undefined') {
+        document.getElementById('paypal-button-container').innerHTML =
+          '<div style="color:#e74c3c;font-size:13px;text-align:center;padding:16px;">PayPal failed to load. Please refresh the page.</div>';
+        return;
+      }
+
+      paypal.Buttons({
+        style: {
+          layout:  'vertical',
+          color:   'black',
+          shape:   'rect',
+          label:   'pay',
+          height:  50,
+        },
+
+        // Called when PayPal renders — create the order
+        createOrder: (data, actions) => {
+          return actions.order.create({
+            purchase_units: [{
+              description: '90 Days Challenge — The Discipline Movement',
+              amount: {
+                // ⚠️ IMPORTANT: Change this to your actual price
+                // PayPal processes in USD — P350 BWP ≈ USD 25.50 (check current rate)
+                // Or use your own PayPal currency if you have BWP enabled
+                currency_code: 'USD',
+                value: '25.50',
+              },
+              soft_descriptor: '90DC CHALLENGE',
+            }],
+            application_context: {
+              brand_name:          'The Discipline Movement',
+              shipping_preference: 'NO_SHIPPING',
+              user_action:         'PAY_NOW',
+            },
+          });
+        },
+
+        // Called after buyer approves the payment
+        onApprove: async (data, actions) => {
+          showProcessing();
+          try {
+            // Capture the payment
+            const order = await actions.order.capture();
+
+            // Send to our Netlify function
+            const res = await fetch('/.netlify/functions/handle-payment', {
+              method:  'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body:    JSON.stringify({
+                orderId: order.id,
+                payerId: data.payerID,
+                email:   payerEmail,
+                name:    payerName,
+              }),
+            });
+
+            const result = await res.json();
+            if (!res.ok || !result.ok) throw new Error(result.error || 'Payment processing failed');
+
+            showSuccess(result.accessDate || accessDateInfo.display);
+
+          } catch (err) {
+            showError('Payment was processed by PayPal but we had trouble saving your details. Please email osi@90dayschallenge.co.bw with your PayPal receipt — you will not be charged twice.');
+            console.error('[payment] Error:', err.message);
+          }
+        },
+
+        onError: (err) => {
+          console.error('[PayPal] Error:', err);
+          showError('PayPal encountered an error. Please try again or use a different payment method.');
+        },
+
+        onCancel: () => {
+          hideProcessing();
+        },
+
+      }).render('#paypal-button-container');
+    }
+
+    // ── State helpers ───────────────────────────────────────
+    function showProcessing() {
+      document.getElementById('paypal-section').style.display    = 'none';
+      document.getElementById('payment-processing').style.display = 'block';
+      document.getElementById('payment-error').style.display     = 'none';
+    }
+
+    function hideProcessing() {
+      document.getElementById('paypal-section').style.display    = '';
+      document.getElementById('payment-processing').style.display = 'none';
+    }
+
+    function showSuccess(accessDate) {
+      document.getElementById('payment-processing').style.display = 'none';
+      document.getElementById('payment-success').style.display    = 'block';
+      document.getElementById('success-access-date').textContent  = accessDate || accessDateInfo.display;
+      document.getElementById('success-email').textContent        = payerEmail;
+      document.querySelector('.sticky-cta').style.display         = 'none';
+      // Scroll to success
+      document.getElementById('payment').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function showError(msg) {
+      document.getElementById('payment-processing').style.display = 'none';
+      document.getElementById('paypal-section').style.display     = '';
+      const errEl = document.getElementById('payment-error');
+      errEl.textContent  = msg;
+      errEl.style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>

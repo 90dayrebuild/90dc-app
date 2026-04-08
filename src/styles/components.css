@@ -1,0 +1,121 @@
+/* ============================================================
+   components.css — Additions and overrides on top of main.css
+   Loaded AFTER main.css. Contains only new rules not present
+   in the original stylesheet.
+   ============================================================ */
+
+/* ── Toast (new single-element implementation) ───────────── */
+/* Replaces original .toast-item append pattern with a simpler
+   single #toast element toggled via .show class.             */
+#toast {
+  position:     fixed;
+  bottom:       80px;
+  left:         50%;
+  transform:    translateX(-50%);
+  background:   var(--bg3);
+  border:       1px solid var(--border);
+  border-left:  3px solid var(--orange);
+  padding:      12px 18px;
+  border-radius:4px;
+  font-size:    12px;
+  color:        var(--white);
+  min-width:    260px;
+  max-width:    90vw;
+  text-align:   center;
+  z-index:      9999;
+  opacity:      0;
+  pointer-events: none;
+  transition:   opacity 0.3s, bottom 0.3s;
+  box-shadow:   var(--shadow);
+  white-space:  pre-line;
+}
+#toast.show            { opacity:1; pointer-events:auto; bottom:88px; }
+#toast.toast-success   { border-left-color:var(--green2); }
+#toast.toast-error     { border-left-color:var(--red2); }
+#toast.toast-warning   { border-left-color:var(--gold2); }
+#toast.toast-info      { border-left-color:var(--blue2); }
+#toast.toast-persistent{ pointer-events:auto; }
+.toast-action-btn {
+  background: transparent;
+  border:     1px solid var(--border);
+  color:      var(--orange);
+  padding:    3px 10px;
+  border-radius: 3px;
+  font-size:  11px;
+  cursor:     pointer;
+  margin-left:8px;
+}
+.toast-action-btn:hover { background:var(--orange-dim); }
+
+/* ── Offline banner ──────────────────────────────────────── */
+/* The original CSS had .offline-banner in the embedded style
+   block which is now in community.css. This ensures it's
+   always available regardless of load order.               */
+.offline-banner {
+  display:    none;
+  position:   fixed;
+  top:        0; left:0; right:0;
+  background: rgba(192,57,43,0.95);
+  color:      #fff;
+  text-align: center;
+  padding:    8px 16px;
+  font-size:  12px;
+  font-weight:700;
+  z-index:    10000;
+}
+.offline-banner.show { display:block; }
+
+/* ── Button disabled state ───────────────────────────────── */
+/* Not in original CSS - needed for async button feedback    */
+.btn:disabled,
+button:disabled {
+  opacity:    0.5;
+  cursor:     not-allowed;
+  transform:  none !important;
+  box-shadow: none !important;
+}
+
+/* ── PWA install button positioning fix ─────────────────── */
+#pwa-install-btn {
+  position: fixed;
+  bottom:   76px;
+  right:    12px;
+  z-index:  500;
+}
+
+/* ── Responsive mobile improvements ─────────────────────── */
+@media (max-width: 480px) {
+  /* Larger tap targets on small screens */
+  .btn     { min-height: 44px; }
+  .btn-sm  { min-height: 36px; }
+  .s-item  { min-height: 44px; }
+
+  /* Prevent text overflow in KPI cards */
+  .kpi-num { font-size: 26px; }
+  .kpi-card{ padding: 10px 8px; }
+
+  /* Better modal on very small screens */
+  .modal {
+    padding:      18px 14px;
+    border-radius:6px;
+    max-height:   95vh;
+  }
+
+  /* Toast at bottom, above bottom nav */
+  #toast { bottom:72px; }
+  #toast.show { bottom:80px; }
+}
+
+@media (max-width: 360px) {
+  .kpi-num { font-size: 22px; }
+  .sec-title { font-size: 26px; }
+}
+
+/* ── High contrast / accessibility ──────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:   0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration:  0.01ms !important;
+  }
+}

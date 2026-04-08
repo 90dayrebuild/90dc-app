@@ -1,0 +1,34 @@
+/* ============================================================
+   warrior-center.css — Standalone Warrior Center page-warrior
+   community.css handles all .wc-* component styles.
+   This file only handles the page shell and desktop layout.
+   ============================================================ */
+
+/* ── Page shell ─────────────────────────────────────────────── */
+#page-warrior {
+  background: var(--bg);
+  overflow: hidden;
+}
+#wc-page-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* ── Body layout ─────────────────────────────────────────────── */
+.wc-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Desktop: rooms sidebar ──────────────────────────────────── */
+@media (min-width: 700px) {
+  .wc-rooms-desktop { display: flex; }
+  .wc-body > .wc-rooms { display: none; }
+  .wc-chat-panel { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+}

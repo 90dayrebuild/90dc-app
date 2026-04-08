@@ -1,0 +1,79 @@
+/* ============================================================
+   theme.css — Design tokens, resets, typography, animations
+   Imported by all other stylesheets.
+   ============================================================ */
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  /* Backgrounds */
+  --bg:    #080808;
+  --bg2:   #101010;
+  --bg3:   #161616;
+  --bg4:   #1E1E1E;
+
+  /* Borders */
+  --border:  #2A2A2A;
+  --border2: #333;
+
+  /* Brand */
+  --orange:      #D94010;
+  --orange2:     #E85520;
+  --orange-dim:  rgba(217,64,16,0.12);
+  --orange-glow: rgba(217,64,16,0.25);
+
+  /* Text */
+  --white: #F5F5F5;
+  --gray:  #A0A0A0;
+  --gray2: #555;
+
+  /* Accent */
+  --gold:  #B8922A;
+  --gold2: #D4A843;
+  --green: #1A6B38;
+  --green2:#22A855;
+  --red:   #8B1A1A;
+  --red2:  #C0392B;
+  --blue:  #1A4A8B;
+  --blue2: #2E7BD4;
+
+  /* Shadows */
+  --shadow:   0 8px 32px rgba(0,0,0,0.6);
+  --shadow-o: 0 8px 32px rgba(217,64,16,0.2);
+
+  /* Mobile viewport */
+  --real-vh: 1vh;
+}
+
+html { scroll-behavior:smooth; }
+
+body {
+  background:    var(--bg);
+  color:         var(--white);
+  font-family:   'Montserrat', sans-serif;
+  font-weight:   400;
+  overflow-x:    hidden;
+  line-height:   1.6;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar       { width:3px; height:3px; }
+::-webkit-scrollbar-thumb { background:var(--orange); border-radius:2px; }
+
+button,input,textarea,select { font-family:'Montserrat', sans-serif; }
+
+/* ── Animations ─────────────────────────────────────────── */
+@keyframes fadeIn    { from{opacity:0}                          to{opacity:1} }
+@keyframes fadeUp    { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes slideIn   { from{opacity:0;transform:translateX(16px)} to{opacity:1;transform:translateX(0)} }
+@keyframes scaleIn   { from{opacity:0;transform:scale(0.85)}   to{opacity:1;transform:scale(1)} }
+@keyframes pulse     { 0%,100%{opacity:1} 50%{opacity:0.4} }
+@keyframes glow      { 0%,100%{box-shadow:0 0 20px rgba(217,64,16,0.3)} 50%{box-shadow:0 0 40px rgba(217,64,16,0.6)} }
+@keyframes tickerScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* ── Brand mark ─────────────────────────────────────────── */
+.brand-logo { display:inline-flex; flex-direction:column; line-height:1; }
+.brand-mv   { font-size:9px; font-weight:800; letter-spacing:4px; text-transform:uppercase; color:var(--orange); white-space:nowrap; }
+.brand-main { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:1px; color:var(--white); white-space:nowrap; }
+.brand-main span { color:var(--orange); }
+.brand-tag  { font-size:7px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gray2); white-space:nowrap; }
